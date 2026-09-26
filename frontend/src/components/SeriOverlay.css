@@ -1259,3 +1259,215 @@
 [data-theme="light"] .seri-voice-panel .voice-close {
   color: #64748b !important;
 }
+/* =========================================================
+   VOICE RECOVERY ACTIONS
+   ========================================================= */
+
+.voice-recovery-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.voice-retry-button,
+.voice-screen-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 0;
+  outline: none;
+
+  min-height: 44px;
+  padding: 0 16px;
+
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+
+/* =========================================================
+   TRY AGAIN
+   ========================================================= */
+
+.voice-retry-button {
+  flex: 1;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #0891b2
+  );
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.voice-retry-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 11px 24px rgba(37, 99, 235, 0.30);
+}
+
+.voice-retry-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   CONTINUE WITH SCREEN
+   ========================================================= */
+
+.voice-screen-button {
+  flex: 1;
+
+  color: var(--seri-text);
+
+  background: var(--seri-card-secondary);
+
+  border: 1px solid var(--seri-border);
+
+  box-shadow: 0 5px 14px var(--seri-shadow);
+}
+
+.voice-screen-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+.voice-screen-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   START SPEAKING
+   ========================================================= */
+
+.voice-start-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 14px;
+
+  border: 1px solid var(--seri-border);
+  border-radius: 12px;
+
+  background: var(--seri-card-secondary);
+  color: var(--seri-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.voice-start-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+
+/* =========================================================
+   DONE SPEAKING
+   ========================================================= */
+
+.voice-stop-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 14px;
+
+  border: 1px solid var(--seri-border);
+  border-radius: 12px;
+
+  background: var(--seri-card-secondary);
+  color: var(--seri-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.voice-stop-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+.voice-retry-button:focus-visible,
+.voice-screen-button:focus-visible,
+.voice-start-button:focus-visible,
+.voice-stop-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.28);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+  .voice-recovery-actions {
+    flex-direction: column;
+  }
+
+  .voice-retry-button,
+  .voice-screen-button {
+    width: 100%;
+    flex: none;
+  }
+
+}

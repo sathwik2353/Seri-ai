@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+
 /* =====================================================
    SERI GLOBAL THEME VARIABLES
 ===================================================== */
@@ -43,7 +44,7 @@
   --seri-shadow: rgba(15, 23, 42, 0.08);
   --seri-shadow-heavy: rgba(15, 23, 42, 0.15);
 
-  /* Theme icon */
+  /* Theme toggle */
   --seri-toggle-bg: #ffffff;
   --seri-toggle-text: #475569;
 }
@@ -54,7 +55,6 @@
 ===================================================== */
 
 [data-theme="dark"] {
-
   /* Brand */
   --seri-primary: #60a5fa;
   --seri-primary-hover: #93c5fd;
@@ -93,7 +93,7 @@
   --seri-shadow: rgba(0, 0, 0, 0.35);
   --seri-shadow-heavy: rgba(0, 0, 0, 0.55);
 
-  /* Theme icon */
+  /* Theme toggle */
   --seri-toggle-bg: #172033;
   --seri-toggle-text: #f8fafc;
 }
@@ -112,7 +112,10 @@
 
 html {
   min-height: 100%;
+
   background: var(--seri-background);
+
+  color: var(--seri-text);
 
   transition:
     background-color 0.3s ease,
@@ -160,7 +163,7 @@ body {
 
 
 /* =====================================================
-   GLOBAL TEXT
+   GLOBAL HEADINGS
 ===================================================== */
 
 h1,
@@ -176,13 +179,9 @@ h6 {
 }
 
 
-p,
-span,
-label {
-  transition:
-    color 0.3s ease;
-}
-
+/* =====================================================
+   GLOBAL TEXT
+===================================================== */
 
 p {
   color: var(--seri-text);
@@ -192,6 +191,26 @@ p {
 small {
   color: var(--seri-muted);
 }
+
+
+label {
+  color: inherit;
+}
+
+
+/*
+   IMPORTANT:
+   Do NOT globally set span color here.
+
+   Components such as:
+   - SERI logo
+   - SERI Core
+   - status icons
+   - voice animation
+   - feature icons
+
+   use their own colors.
+*/
 
 
 /* =====================================================
@@ -213,8 +232,7 @@ button {
 
 
 button:focus-visible {
-  outline: 3px solid
-    rgba(96, 165, 250, 0.35);
+  outline: 3px solid rgba(96, 165, 250, 0.35);
 
   outline-offset: 3px;
 }
@@ -369,17 +387,4 @@ select,
 
     scroll-behavior: auto !important;
   }
-
-}
-[data-theme="dark"] {
-  color: #ffffff;
-}
-
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] p,
-[data-theme="dark"] span,
-[data-theme="dark"] label {
-  color: #ffffff;
 }

@@ -1,37 +1,33 @@
 import "./Home.css";
-
-import {
-  getTranslations
-} from "../services/i18n";
-
+import { getTranslations } from "../services/i18n";
 
 function Home({
   language,
   onLanguageChange,
   onAnalyze,
   theme,
-  onThemeChange
+  onThemeChange,
 }) {
-
   const t = getTranslations(language);
-
   const isDark = theme === "dark";
 
+  const languages = [
+    { label: "English", value: "English" },
+    { label: "తెలుగు", value: "Telugu" },
+    { label: "हिन्दी", value: "Hindi" },
+    { label: "ಕನ್ನಡ", value: "Kannada" },
+    { label: "தமிழ்", value: "Tamil" },
+  ];
 
   return (
-
     <div className="home-page">
 
       {/* =====================================================
           HEADER
-      ====================================================== */}
-
+      ===================================================== */}
       <header className="home-header">
 
         <div className="home-logo">
-
-          {/* THEME-AWARE SERI LOGO */}
-
           <div
             className={`logo-icon ${
               isDark ? "logo-icon-dark" : "logo-icon-light"
@@ -40,94 +36,69 @@ function Home({
             <span className="logo-spark">✦</span>
           </div>
 
-
           <div className="logo-text">
+            <span className="logo-title">SERI</span>
 
-            <div className="logo-title">
-              SERI
-            </div>
-
-            <div className="logo-subtitle">
+            <span className="logo-subtitle">
               Screen Intelligence
-            </div>
-
+            </span>
           </div>
-
         </div>
-
 
         <div className="header-right">
 
           <div className="system-status">
-
-            <span className="status-dot"></span>
-
-            <span className="status-text">
-              {t.ready}
-            </span>
-
+            <span className="status-dot" />
+            <span>{t.ready || "Ready"}</span>
           </div>
 
-
-          {/* THEME BUTTON */}
-
           <button
+            type="button"
             className="theme-toggle"
             onClick={onThemeChange}
-            aria-label="Change theme"
-            title={
+            aria-label={
               isDark
-                ? "Switch to light mode"
-                : "Switch to dark mode"
+                ? "Switch to light theme"
+                : "Switch to dark theme"
             }
           >
-
             <span className="theme-icon">
               {isDark ? "☀" : "☾"}
             </span>
-
           </button>
 
         </div>
-
       </header>
 
 
       {/* =====================================================
           MAIN
-      ====================================================== */}
-
+      ===================================================== */}
       <main className="home-main">
 
-
-        {/* =================================================
+        {/* ===================================================
             HERO
-        ================================================== */}
-
+        =================================================== */}
         <section className="home-hero">
 
           <div className="hero-content">
 
-
-            {/* BADGE */}
-
             <div className="hero-badge">
+              <span className="hero-badge-dot" />
 
-              <span className="badge-dot"></span>
-
-              {t.screenIntelligence}
-
+              {t.screenIntelligence ||
+                "Screen Intelligence"}
             </div>
 
 
-            {/* MAIN TITLE */}
-
             <h1 className="hero-title">
 
-              {t.heroTitle1}
+              <span>
+                {t.heroTitle1 || "Understand what"}
+              </span>
 
-              <span className="hero-title-gradient">
-                {t.heroTitle2}
+              <span className="hero-title-accent">
+                {t.heroTitle2 || "you see."}
               </span>
 
             </h1>
@@ -138,20 +109,19 @@ function Home({
             </p>
 
 
-            {/* DESCRIPTION */}
-
             <p className="hero-description">
-
-              {t.heroDescription}
-
+              {t.heroDescription ||
+                "SERI understands what's on your screen and explains it simply, safely, and in a language you understand."}
             </p>
 
 
-            {/* ACTIONS */}
-
+            {/* =================================================
+                MAIN ACTION
+            ================================================= */}
             <div className="hero-actions">
 
               <button
+                type="button"
                 className="understand-button"
                 onClick={onAnalyze}
               >
@@ -161,7 +131,8 @@ function Home({
                 </span>
 
                 <span>
-                  {t.understandScreen}
+                  {t.understandScreen ||
+                    "Understand this screen"}
                 </span>
 
                 <span className="button-arrow">
@@ -170,24 +141,52 @@ function Home({
 
               </button>
 
+            </div>
 
-              <div className="voice-hint">
 
-                <span className="voice-icon">
-                  🎙
+            {/* =================================================
+                LANGUAGE SELECTOR
+            ================================================= */}
+            <div className="language-selector">
+
+              <div className="language-selector-label">
+
+                <span className="language-label-icon">
+                  文
                 </span>
 
-                <div>
+                <span>
+                  {t.chooseLanguage ||
+                    "Choose language"}
+                </span>
 
-                  <span>
-                    {t.speakToSeri}
-                  </span>
+              </div>
 
-                  <strong>
-                    {t.tapFloatingAssistant}
-                  </strong>
 
-                </div>
+              <div className="language-options">
+
+                {languages.map((item) => {
+
+                  const selected =
+                    language === item.value;
+
+                  return (
+                    <button
+                      key={item.value}
+                      type="button"
+                      className={`language-option ${
+                        selected
+                          ? "language-option-active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        onLanguageChange(item.value)
+                      }
+                    >
+                      {item.label}
+                    </button>
+                  );
+                })}
 
               </div>
 
@@ -195,51 +194,97 @@ function Home({
 
 
             {/* =================================================
-                PHONE DEMO
-            ================================================== */}
+                VOICE HINT
+            ================================================= */}
+            <div className="voice-hint">
 
-            <div className="screen-demo">
+              <span className="voice-hint-icon">
+                ●
+              </span>
 
-              <div className="phone-demo">
+              <span>
+                {t.speakToSeri ||
+                  "You can also speak to SERI"}
+              </span>
 
-                <div className="phone-notch"></div>
+              <span className="voice-hint-divider">
+                •
+              </span>
 
+              <span>
+                {t.tapFloatingAssistant ||
+                  "Use the floating assistant"}
+              </span>
+
+            </div>
+
+
+            {/* =================================================
+                PRIVACY
+            ================================================= */}
+            <div className="home-privacy">
+
+              <span>
+                ⌁
+              </span>
+
+              <span>
+                {t.privacy ||
+                  "You stay in control. SERI only understands what you choose to share."}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          {/* =================================================
+              PHONE DEMO
+          ================================================= */}
+          <div className="screen-demo">
+
+            <div className="phone-demo">
+
+              <div className="phone-frame">
+
+                <div className="phone-notch" />
 
                 <div className="phone-screen">
 
+                  {/* PHONE STATUS */}
                   <div className="phone-status-bar">
 
                     <span>
                       9:41
                     </span>
 
-                    <span>
-                      ● ● ▰
-                    </span>
+                    <div className="phone-status-icons">
+                      <span>▮▮</span>
+                      <span>⌁</span>
+                      <span>▰</span>
+                    </div>
 
                   </div>
 
 
+                  {/* APP HEADER */}
                   <div className="phone-app-header">
 
-                    <span className="phone-back">
-                      ‹
+                    <span>
+                      Messages
                     </span>
 
-                    <strong>
-                      Messages
-                    </strong>
-
                     <span>
-                      ⋮
+                      ⋯
                     </span>
 
                   </div>
 
 
+                  {/* MESSAGE */}
                   <div className="phone-message">
 
-                    <div className="phone-message-heading">
+                    <div className="message-header">
 
                       <div className="message-avatar">
                         A
@@ -252,7 +297,7 @@ function Home({
                         </strong>
 
                         <small>
-                          Today, 9:38 AM
+                          Just now
                         </small>
 
                       </div>
@@ -270,7 +315,7 @@ function Home({
                     <div className="phone-warning">
 
                       <span>
-                        ⚠
+                        !
                       </span>
 
                       <span>
@@ -283,27 +328,16 @@ function Home({
 
 
                   {/* SERI RESPONSE */}
-
                   <div className="phone-seri-response">
 
-                    <div className="phone-seri-header">
+                    <div className="seri-response-header">
 
-                      <div
-                        className={`mini-seri-logo ${
-                          isDark
-                            ? "mini-logo-dark"
-                            : "mini-logo-light"
-                        }`}
-                      >
+                      <div className="mini-seri-logo">
                         ✦
                       </div>
 
-                      <strong>
-                        SERI
-                      </strong>
-
                       <span>
-                        AI explanation
+                        SERI
                       </span>
 
                     </div>
@@ -311,15 +345,34 @@ function Home({
 
                     <p>
                       This message asks you to
-                      verify your account. Be
-                      careful before clicking the
-                      link.
+                      verify your account.
+                      Be careful before clicking
+                      the link.
                     </p>
 
 
-                    <div className="phone-safe-label">
-                      🛡 Check before acting
+                    <div className="seri-safe-label">
+
+                      <span>
+                        ✓
+                      </span>
+
+                      Check before acting
+
                     </div>
+
+                  </div>
+
+
+                  {/* FLOATING LABEL */}
+                  <div className="demo-floating-label">
+
+                    <span>
+                      ✦
+                    </span>
+
+                    SERI understands what is
+                    on your screen
 
                   </div>
 
@@ -327,96 +380,6 @@ function Home({
 
               </div>
 
-
-              {/* DEMO LABEL */}
-
-              <div className="demo-floating-label">
-
-                <span className="demo-live-dot"></span>
-
-                SERI understands what is
-                on your screen
-
-              </div>
-
-            </div>
-
-
-            {/* =================================================
-                LANGUAGE
-            ================================================== */}
-
-            <div className="language-area">
-
-              <div className="language-label">
-
-                <span className="language-symbol">
-                  文
-                </span>
-
-
-                <div>
-
-                  <strong>
-                    {t.explanationLanguage}
-                  </strong>
-
-                  <small>
-                    {t.chooseLanguage}
-                  </small>
-
-                </div>
-
-              </div>
-
-
-              <select
-                value={language}
-                onChange={(event) =>
-                  onLanguageChange(
-                    event.target.value
-                  )
-                }
-                className="language-select"
-              >
-
-                <option value="English">
-                  English
-                </option>
-
-                <option value="Telugu">
-                  తెలుగు
-                </option>
-
-                <option value="Hindi">
-                  हिन्दी
-                </option>
-
-                <option value="Kannada">
-                  ಕನ್ನಡ
-                </option>
-
-                <option value="Tamil">
-                  தமிழ்
-                </option>
-
-              </select>
-
-            </div>
-
-
-            {/* PRIVACY */}
-
-            <div className="home-privacy">
-
-              <span>
-                🔒
-              </span>
-
-              <span>
-                {t.privacy}
-              </span>
-
             </div>
 
           </div>
@@ -424,25 +387,23 @@ function Home({
         </section>
 
 
-        {/* =====================================================
+        {/* ===================================================
             HOW SERI WORKS
-        ====================================================== */}
-
+        =================================================== */}
         <section className="how-seri-works">
 
           <div className="section-heading">
 
             <span className="section-eyebrow">
-              HOW IT WORKS
+              HOW SERI WORKS
             </span>
 
             <h2>
-              From screen to understanding
+              From confusion to clarity.
             </h2>
 
             <p>
-              SERI turns confusing screen content
-              into simple explanations you can understand.
+              Three simple steps. No technical knowledge required.
             </p>
 
           </div>
@@ -450,17 +411,15 @@ function Home({
 
           <div className="steps-grid">
 
-
-            {/* STEP 1 */}
-
-            <div className="step-card">
+            {/* STEP 01 */}
+            <article className="step-card">
 
               <div className="step-number">
                 01
               </div>
 
               <div className="step-icon">
-                📱
+                ⌖
               </div>
 
               <h3>
@@ -468,28 +427,29 @@ function Home({
               </h3>
 
               <p>
-                Open SERI when you see something
-                on your screen that you do not understand.
+                Choose what is on your screen
+                and ask SERI for help.
               </p>
 
-            </div>
+            </article>
 
 
             <div className="step-connector">
-              →
+              <span>
+                →
+              </span>
             </div>
 
 
-            {/* STEP 2 */}
-
-            <div className="step-card">
+            {/* STEP 02 */}
+            <article className="step-card">
 
               <div className="step-number">
                 02
               </div>
 
               <div className="step-icon">
-                👁
+                ◉
               </div>
 
               <h3>
@@ -497,28 +457,29 @@ function Home({
               </h3>
 
               <p>
-                SERI looks at the important information
-                visible on the current screen.
+                SERI reads the screen and
+                identifies what matters.
               </p>
 
-            </div>
+            </article>
 
 
             <div className="step-connector">
-              →
+              <span>
+                →
+              </span>
             </div>
 
 
-            {/* STEP 3 */}
-
-            <div className="step-card">
+            {/* STEP 03 */}
+            <article className="step-card">
 
               <div className="step-number">
                 03
               </div>
 
               <div className="step-icon">
-                💬
+                ✦
               </div>
 
               <h3>
@@ -526,67 +487,116 @@ function Home({
               </h3>
 
               <p>
-                The information is explained in simple
-                language, with voice support when needed.
+                Get a simple explanation,
+                safety guidance, and next step.
               </p>
 
-            </div>
+            </article>
 
           </div>
 
         </section>
 
 
-        {/* =====================================================
-            SAFETY SECTION
-        ====================================================== */}
-
+        {/* ===================================================
+            SAFETY ASSISTANCE
+        =================================================== */}
         <section className="safety-section">
 
-          <div className="safety-card">
+          <div className="safety-visual">
 
-            <div className="safety-visual">
-
-              <div className="safety-shield">
-                🛡
-              </div>
-
+            <div className="safety-shield">
+              <span>
+                ✓
+              </span>
             </div>
 
-
-            <div className="safety-content">
-
-              <span className="section-eyebrow">
-                SAFETY ASSISTANCE
-              </span>
-
-              <h2>
-                Understand before you act.
-              </h2>
-
-              <p>
-                SERI can highlight requests involving
-                links, payments, passwords, OTPs or
-                account verification and explain what
-                you should check before taking action.
-              </p>
+          </div>
 
 
-              <div className="safety-points">
+          <div className="safety-content">
+
+            <span className="section-eyebrow">
+              SAFETY ASSISTANCE
+            </span>
+
+            <h2>
+              Understand before you act.
+            </h2>
+
+            <p>
+              SERI can help you recognize potentially
+              risky messages, links, payment requests,
+              OTP requests and account verification prompts.
+            </p>
+
+
+            <div className="safety-points">
+
+              {/* SAFETY POINT 01 */}
+              <div className="safety-point">
+
+                <span>
+                  01
+                </span>
 
                 <div>
-                  <span>✓</span>
-                  Suspicious requests are highlighted
+
+                  <strong>
+                    Identify suspicious content
+                  </strong>
+
+                  <p>
+                    Highlight things that deserve
+                    a closer look.
+                  </p>
+
                 </div>
 
-                <div>
-                  <span>✓</span>
-                  Important actions are explained
-                </div>
+              </div>
+
+
+              {/* SAFETY POINT 02 */}
+              <div className="safety-point">
+
+                <span>
+                  02
+                </span>
 
                 <div>
-                  <span>✓</span>
-                  You remain in control
+
+                  <strong>
+                    Explain why it matters
+                  </strong>
+
+                  <p>
+                    Understand the possible risk
+                    in simple language.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              {/* SAFETY POINT 03 */}
+              <div className="safety-point">
+
+                <span>
+                  03
+                </span>
+
+                <div>
+
+                  <strong>
+                    Help you decide safely
+                  </strong>
+
+                  <p>
+                    SERI suggests safer next steps
+                    without acting for you.
+                  </p>
+
                 </div>
 
               </div>
@@ -598,25 +608,23 @@ function Home({
         </section>
 
 
-        {/* =====================================================
+        {/* ===================================================
             FEATURES
-        ====================================================== */}
-
+        =================================================== */}
         <section className="home-features">
 
           <div className="section-heading">
 
             <span className="section-eyebrow">
-              BUILT FOR EVERYONE
+              BUILT FOR REAL PEOPLE
             </span>
 
             <h2>
-              Simple by design
+              Simple by design.
             </h2>
 
             <p>
-              SERI focuses on clarity, accessibility
-              and human control.
+              SERI focuses on understanding, not overwhelming.
             </p>
 
           </div>
@@ -624,13 +632,11 @@ function Home({
 
           <div className="feature-grid">
 
-
-            {/* FEATURE 1 */}
-
-            <div className="feature-card">
+            {/* FEATURE 01 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                👁
+                ◉
               </div>
 
               <h3>
@@ -638,20 +644,18 @@ function Home({
               </h3>
 
               <p>
-                SERI reads important information
-                visible on your screen and helps
-                you understand what it means.
+                Understands text, buttons,
+                warnings, forms and visual context.
               </p>
 
-            </div>
+            </article>
 
 
-            {/* FEATURE 2 */}
-
-            <div className="feature-card">
+            {/* FEATURE 02 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                💬
+                ≡
               </div>
 
               <h3>
@@ -659,20 +663,18 @@ function Home({
               </h3>
 
               <p>
-                Complex messages are converted
-                into clear and easy-to-understand
-                language.
+                Converts complicated digital
+                language into something easier to understand.
               </p>
 
-            </div>
+            </article>
 
 
-            {/* FEATURE 3 */}
-
-            <div className="feature-card">
+            {/* FEATURE 03 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                🎙
+                ●
               </div>
 
               <h3>
@@ -680,20 +682,18 @@ function Home({
               </h3>
 
               <p>
-                Speak naturally with SERI and
-                receive explanations without
-                needing to understand technical terms.
+                Listen to explanations and
+                communicate naturally with SERI.
               </p>
 
-            </div>
+            </article>
 
 
-            {/* FEATURE 4 */}
-
-            <div className="feature-card">
+            {/* FEATURE 04 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                🌐
+                文
               </div>
 
               <h3>
@@ -701,20 +701,18 @@ function Home({
               </h3>
 
               <p>
-                Get explanations in languages
-                that are comfortable and familiar
-                to you.
+                Designed to make digital information
+                easier across Indian languages.
               </p>
 
-            </div>
+            </article>
 
 
-            {/* FEATURE 5 */}
-
-            <div className="feature-card">
+            {/* FEATURE 05 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                🛡
+                ✓
               </div>
 
               <h3>
@@ -722,20 +720,18 @@ function Home({
               </h3>
 
               <p>
-                SERI helps you notice potentially
-                risky requests and explains what
-                to check before acting.
+                Helps identify potentially risky
+                messages and actions.
               </p>
 
-            </div>
+            </article>
 
 
-            {/* FEATURE 6 */}
-
-            <div className="feature-card">
+            {/* FEATURE 06 */}
+            <article className="feature-card">
 
               <div className="feature-icon">
-                👤
+                ⌁
               </div>
 
               <h3>
@@ -744,156 +740,10 @@ function Home({
 
               <p>
                 SERI explains and assists while
-                keeping important decisions
-                under your control.
+                keeping important decisions with you.
               </p>
 
-            </div>
-
-          </div>
-
-        </section>
-
-
-        {/* =====================================================
-            LANGUAGES
-        ====================================================== */}
-
-        <section className="languages-section">
-
-          <div className="section-heading">
-
-            <span className="section-eyebrow">
-              YOUR LANGUAGE
-            </span>
-
-            <h2>
-              Understanding should feel natural.
-            </h2>
-
-            <p>
-              Choose the language you are most
-              comfortable using.
-            </p>
-
-          </div>
-
-
-          <div className="language-pills">
-
-            <button
-              className={
-                language === "English"
-                  ? "language-pill active"
-                  : "language-pill"
-              }
-              onClick={() =>
-                onLanguageChange("English")
-              }
-            >
-              English
-            </button>
-
-
-            <button
-              className={
-                language === "Telugu"
-                  ? "language-pill active"
-                  : "language-pill"
-              }
-              onClick={() =>
-                onLanguageChange("Telugu")
-              }
-            >
-              తెలుగు
-            </button>
-
-
-            <button
-              className={
-                language === "Hindi"
-                  ? "language-pill active"
-                  : "language-pill"
-              }
-              onClick={() =>
-                onLanguageChange("Hindi")
-              }
-            >
-              हिन्दी
-            </button>
-
-
-            <button
-              className={
-                language === "Kannada"
-                  ? "language-pill active"
-                  : "language-pill"
-              }
-              onClick={() =>
-                onLanguageChange("Kannada")
-              }
-            >
-              ಕನ್ನಡ
-            </button>
-
-
-            <button
-              className={
-                language === "Tamil"
-                  ? "language-pill active"
-                  : "language-pill"
-              }
-              onClick={() =>
-                onLanguageChange("Tamil")
-              }
-            >
-              தமிழ்
-            </button>
-
-          </div>
-
-        </section>
-
-
-        {/* =====================================================
-            FINAL CTA
-        ====================================================== */}
-
-        <section className="final-cta">
-
-          <div className="final-cta-glow"></div>
-
-          <div className="final-cta-content">
-
-            <div className="final-seri-logo">
-              ✦
-            </div>
-
-            <h2>
-              Don't understand what's on your screen?
-            </h2>
-
-            <p>
-              Let SERI explain it simply.
-            </p>
-
-
-            <button
-              className="final-cta-button"
-              onClick={onAnalyze}
-            >
-
-              <span>
-                ✦
-              </span>
-
-              Understand my screen
-
-              <span>
-                →
-              </span>
-
-            </button>
+            </article>
 
           </div>
 
@@ -904,22 +754,14 @@ function Home({
 
       {/* =====================================================
           FOOTER
-      ====================================================== */}
-
+      ===================================================== */}
       <footer className="home-footer">
 
         <div className="footer-brand">
 
-          <div
-            className={`footer-logo ${
-              isDark
-                ? "footer-logo-dark"
-                : "footer-logo-light"
-            }`}
-          >
+          <div className="footer-logo">
             ✦
           </div>
-
 
           <div>
 
@@ -928,7 +770,7 @@ function Home({
             </strong>
 
             <span>
-              AI Screen Understanding Assistant
+              Screen Intelligence
             </span>
 
           </div>
@@ -936,29 +778,14 @@ function Home({
         </div>
 
 
-        <div className="footer-right">
-
-          <span>
-            Built for simpler digital experiences
-          </span>
-
-          <span className="footer-divider">
-            •
-          </span>
-
-          <span>
-            © 2026 SERI
-          </span>
-
+        <div className="footer-copy">
+          © 2026 SERI
         </div>
 
       </footer>
 
     </div>
-
   );
-
 }
-
 
 export default Home;
