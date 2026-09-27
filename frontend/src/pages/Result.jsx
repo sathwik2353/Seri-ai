@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./Result.css";
 
@@ -6,6 +6,7 @@ import {
   getTranslations,
   getLanguageCode
 } from "../services/i18n";
+import { playTtsAudio, stopTtsAudio } from "../services/api";
 
 
 function Result({
@@ -71,73 +72,54 @@ function Result({
   };
 
 
+  // Clean spoken text that utilizes native regional speech without raw URLs
+  const getSpokenText = () => {
+    if (!result) return "";
+    if (result.speak_response) return result.speak_response;
+
+    const parts = [
+      result.simple_explanation || result.summary,
+      result.recommended_action || result.recommendation
+    ].filter(Boolean);
+
+    return parts.join(" ");
+  };
+
+
+  // Auto-play regional voice explanation as soon as the result is loaded
+  useEffect(() => {
+    const textToSpeak = getSpokenText();
+    if (!textToSpeak) return;
+
+    const timer = setTimeout(() => {
+      playTtsAudio(textToSpeak, language, {
+        onStart: () => setIsSpeaking(true),
+        onEnd: () => setIsSpeaking(false),
+        onError: () => setIsSpeaking(false)
+      });
+    }, 350);
+
+    return () => {
+      clearTimeout(timer);
+      stopTtsAudio();
+    };
+  }, [result, language]);
+
+
   const handleListen = () => {
+    const textToSpeak = getSpokenText();
+    if (!textToSpeak) return;
 
-    if (!result) return;
-
-
-    if (!("speechSynthesis" in window)) {
-
-      alert(
-        "Speech synthesis is not supported in this browser."
-      );
-
-      return;
-    }
-
-
-    window.speechSynthesis.cancel();
-
-
-    const text = `
-      ${result.summary}.
-      ${result.simple_explanation}.
-      ${result.risk_reason}.
-      ${result.recommended_action}.
-    `;
-
-
-    const speech =
-      new SpeechSynthesisUtterance(text);
-
-
-    speech.lang =
-      languageCode;
-
-    speech.rate =
-      0.88;
-
-    speech.pitch =
-      1;
-
-
-    speech.onstart = () => {
-      setIsSpeaking(true);
-    };
-
-
-    speech.onend = () => {
-      setIsSpeaking(false);
-    };
-
-
-    speech.onerror = () => {
-      setIsSpeaking(false);
-    };
-
-
-    setIsSpeaking(true);
-
-    window.speechSynthesis.speak(
-      speech
-    );
+    playTtsAudio(textToSpeak, language, {
+      onStart: () => setIsSpeaking(true),
+      onEnd: () => setIsSpeaking(false),
+      onError: () => setIsSpeaking(false)
+    });
   };
 
 
   const handleStopSpeaking = () => {
-
-    window.speechSynthesis.cancel();
-
+    stopTtsAudio();
     setIsSpeaking(false);
   };
 
