@@ -1,0 +1,1473 @@
+/* =====================================================
+   SERI FLOATING VOICE BUTTON
+===================================================== */
+
+.seri-voice-orb {
+  position: fixed;
+
+  right: 28px;
+  bottom: 28px;
+
+  width: 72px;
+  height: 72px;
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  z-index: 1000;
+
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+
+.seri-voice-orb:hover {
+  transform: scale(1.08);
+}
+
+
+.seri-voice-orb:active {
+  transform: scale(0.96);
+}
+
+
+/* =====================================================
+   ORB RINGS
+===================================================== */
+
+.orb-ring {
+  position: absolute;
+
+  inset: 0;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+.ring-one {
+  border: 1px solid rgba(37, 99, 235, 0.22);
+
+  animation:
+    seriRing 3s ease-in-out infinite;
+}
+
+
+.ring-two {
+  inset: 7px;
+
+  border: 1px solid rgba(34, 211, 238, 0.30);
+
+  animation:
+    seriRing 3s ease-in-out infinite 0.5s;
+}
+
+
+.ring-three {
+  inset: 14px;
+
+  border: 1px solid rgba(37, 99, 235, 0.35);
+
+  animation:
+    seriRing 3s ease-in-out infinite 1s;
+}
+
+
+@keyframes seriRing {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+
+/* =====================================================
+   ORB GLOW
+===================================================== */
+
+.orb-glow {
+  position: absolute;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(37, 99, 235, 0.30),
+      rgba(34, 211, 238, 0.12),
+      transparent 70%
+    );
+
+  filter: blur(5px);
+
+  animation:
+    orbGlow 2.5s ease-in-out infinite;
+}
+
+
+@keyframes orbGlow {
+
+  0%,
+  100% {
+    transform: scale(0.95);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+
+/* =====================================================
+   ORB CORE
+===================================================== */
+
+.orb-core {
+  position: relative;
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2563eb,
+      #0891b2
+    );
+
+  box-shadow:
+    0 10px 30px rgba(37, 99, 235, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.45);
+
+  color: white;
+
+  font-size: 24px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.orb-sparkle {
+  font-size: 26px;
+
+  line-height: 1;
+
+  animation:
+    sparklePulse 2s ease-in-out infinite;
+}
+
+
+@keyframes sparklePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+
+.orb-microphone {
+  font-size: 23px;
+
+  animation:
+    microphonePulse 1s ease-in-out infinite;
+}
+
+
+@keyframes microphonePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+
+/* =====================================================
+   LISTENING STATE
+===================================================== */
+
+.seri-voice-orb.orb-listening .orb-core {
+
+  box-shadow:
+    0 0 0 8px rgba(34, 211, 238, 0.10),
+    0 12px 35px rgba(37, 99, 235, 0.42),
+    inset 0 1px 1px rgba(255, 255, 255, 0.45);
+
+}
+
+
+.seri-voice-orb.orb-listening .ring-one {
+
+  animation:
+    listeningRing 1.2s ease-in-out infinite;
+
+}
+
+
+.seri-voice-orb.orb-listening .ring-two {
+
+  animation:
+    listeningRing 1.2s ease-in-out infinite 0.2s;
+
+}
+
+
+.seri-voice-orb.orb-listening .ring-three {
+
+  animation:
+    listeningRing 1.2s ease-in-out infinite 0.4s;
+
+}
+
+
+@keyframes listeningRing {
+
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.25;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+}
+
+
+/* =====================================================
+   SERI PANEL
+===================================================== */
+
+.seri-voice-panel {
+
+  position: fixed;
+
+  right: 28px;
+  bottom: 115px;
+
+  width: 380px;
+
+  max-width:
+    calc(100vw - 32px);
+
+  max-height:
+    calc(100vh - 140px);
+
+  overflow-y: auto;
+
+  z-index: 999;
+
+  background:
+    var(--seri-card, #ffffff);
+
+  border:
+    1px solid
+    var(--seri-border, #e2e8f0);
+
+  border-radius: 26px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 24px 70px rgba(15, 23, 42, 0.18);
+
+  color:
+    var(--seri-text, #0f172a);
+
+  animation:
+    seriPanelIn 0.28s ease-out;
+
+  transform-origin:
+    bottom right;
+}
+
+
+@keyframes seriPanelIn {
+
+  from {
+    opacity: 0;
+    transform:
+      translateY(15px)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.voice-panel-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+
+}
+
+
+.voice-brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+}
+
+
+.mini-seri-orb {
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2563eb,
+      #0891b2
+    );
+
+  box-shadow:
+    0 7px 18px rgba(37, 99, 235, 0.25);
+
+  font-size: 18px;
+
+}
+
+
+.voice-brand > div:last-child {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+
+.voice-brand strong {
+
+  font-size: 17px;
+
+  letter-spacing: 0.02em;
+
+}
+
+
+.voice-brand span {
+
+  font-size: 11px;
+
+  color:
+    var(--seri-muted, #64748b);
+
+}
+
+
+.voice-close {
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    var(--seri-soft, #eff6ff);
+
+  color:
+    var(--seri-muted, #64748b);
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+.voice-close:hover {
+
+  background:
+    var(--seri-border, #e2e8f0);
+
+  color:
+    var(--seri-text, #0f172a);
+
+}
+
+
+/* =====================================================
+   ASSISTANT
+===================================================== */
+
+.voice-assistant {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  padding:
+    6px 0 10px;
+
+}
+
+
+.assistant-orb {
+
+  position: relative;
+
+  width: 116px;
+  height: 116px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 16px;
+
+}
+
+
+.assistant-ring {
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+}
+
+
+.ring-a {
+
+  inset: 0;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, 0.18);
+
+}
+
+
+.ring-b {
+
+  inset: 10px;
+
+  border:
+    1px solid
+    rgba(34, 211, 238, 0.25);
+
+}
+
+
+.ring-c {
+
+  inset: 20px;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, 0.30);
+
+}
+
+
+.assistant-core {
+
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-size: 32px;
+
+  box-shadow:
+    0 14px 35px rgba(37, 99, 235, 0.28);
+
+}
+
+
+.assistant-listening .ring-a {
+
+  animation:
+    assistantRing 1.2s ease-in-out infinite;
+
+}
+
+
+.assistant-listening .ring-b {
+
+  animation:
+    assistantRing 1.2s ease-in-out infinite 0.2s;
+
+}
+
+
+.assistant-listening .ring-c {
+
+  animation:
+    assistantRing 1.2s ease-in-out infinite 0.4s;
+
+}
+
+
+@keyframes assistantRing {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.25;
+  }
+
+}
+
+
+.big-mic {
+
+  font-size: 30px;
+
+  animation:
+    micPulse 1s ease-in-out infinite;
+
+}
+
+
+@keyframes micPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+
+}
+
+
+/* =====================================================
+   VOICE STATE
+===================================================== */
+
+.voice-state {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+}
+
+
+.voice-state strong {
+
+  font-size: 17px;
+
+}
+
+
+.voice-state span {
+
+  font-size: 13px;
+
+  color:
+    var(--seri-muted, #64748b);
+
+}
+
+
+/* =====================================================
+   VISUALIZER
+===================================================== */
+
+.voice-visualizer {
+
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  margin:
+    12px 0 8px;
+
+}
+
+
+.voice-visualizer span {
+
+  width: 3px;
+
+  height: 7px;
+
+  border-radius: 10px;
+
+  background:
+    var(--seri-border, #cbd5e1);
+
+}
+
+
+.voice-visualizer.visualizer-active span {
+
+  background:
+    linear-gradient(
+      to top,
+      #2563eb,
+      #22d3ee
+    );
+
+  animation:
+    visualizerBars 0.8s ease-in-out infinite alternate;
+
+}
+
+
+@keyframes visualizerBars {
+
+  from {
+    height: 7px;
+  }
+
+  to {
+    height: 30px;
+  }
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.voice-error {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  padding: 11px 13px;
+
+  margin:
+    8px 0 12px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(220, 38, 38, 0.08);
+
+  border:
+    1px solid
+    rgba(220, 38, 38, 0.18);
+
+  color:
+    var(--seri-danger, #dc2626);
+
+  font-size: 12px;
+
+  line-height: 1.45;
+
+}
+
+
+/* =====================================================
+   SPOKEN TEXT
+===================================================== */
+
+.spoken-text {
+
+  margin-top: 12px;
+
+  padding: 14px;
+
+  border-radius: 15px;
+
+  background:
+    var(--seri-soft, #eff6ff);
+
+  border:
+    1px solid
+    var(--seri-soft-border, #dbeafe);
+
+}
+
+
+.spoken-label {
+
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  color:
+    var(--seri-primary, #2563eb);
+
+}
+
+
+.spoken-text p {
+
+  font-size: 14px;
+
+  line-height: 1.55;
+
+  color:
+    var(--seri-text, #0f172a);
+
+}
+
+
+/* =====================================================
+   UNDERSTAND SCREEN BUTTON
+===================================================== */
+
+.voice-understand-button {
+
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: 14px;
+
+  padding:
+    0 15px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #0891b2
+    );
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 24px rgba(37, 99, 235, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+
+.voice-understand-button:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 30px rgba(37, 99, 235, 0.28);
+
+}
+
+
+.voice-understand-button:active {
+
+  transform:
+    translateY(0);
+
+}
+
+
+.voice-understand-button > span:first-child {
+
+  font-size: 18px;
+
+}
+
+
+.voice-understand-button > span:nth-child(2) {
+
+  flex: 1;
+
+  text-align: left;
+
+}
+
+
+.button-arrow {
+
+  font-size: 20px;
+
+}
+
+
+/* =====================================================
+   PRIVACY
+===================================================== */
+
+.voice-privacy {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  margin-top: 15px;
+
+  color:
+    var(--seri-muted, #64748b);
+
+  font-size: 10px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .seri-voice-orb {
+
+    right: 18px;
+
+    bottom: 18px;
+
+    width: 64px;
+
+    height: 64px;
+
+  }
+
+
+  .orb-core {
+
+    width: 48px;
+    height: 48px;
+
+  }
+
+
+  .seri-voice-panel {
+
+    right: 12px;
+
+    bottom: 95px;
+
+    width:
+      calc(100vw - 24px);
+
+    max-width:
+      calc(100vw - 24px);
+
+    padding: 18px;
+
+    border-radius: 22px;
+
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+  .seri-voice-panel {
+
+    max-height:
+      calc(100vh - 110px);
+
+    padding: 15px;
+
+  }
+
+
+  .assistant-orb {
+
+    width: 96px;
+    height: 96px;
+
+  }
+
+
+  .assistant-core {
+
+    width: 62px;
+    height: 62px;
+
+  }
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+[data-theme="dark"] .seri-voice-panel {
+
+  background:
+    #0f172a;
+
+  border-color:
+    #1e293b;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45);
+
+}
+
+
+[data-theme="dark"] .voice-close {
+
+  background:
+    #172554;
+
+  color:
+    #94a3b8;
+
+}
+
+
+[data-theme="dark"] .voice-close:hover {
+
+  background:
+    #1e293b;
+
+  color:
+    #f1f5f9;
+
+}
+
+
+[data-theme="dark"] .spoken-text {
+
+  background:
+    #172554;
+
+  border-color:
+    #1e40af;
+
+}
+
+
+[data-theme="dark"] .voice-privacy {
+
+  color:
+    #94a3b8;
+
+}
+
+
+[data-theme="dark"] .voice-visualizer span {
+
+  background:
+    #334155;
+
+}
+/* =====================================================
+   FINAL LIGHT / DARK THEME OVERRIDES
+   ===================================================== */
+
+/* ---------- LIGHT MODE ---------- */
+
+:root {
+  --seri-panel-text: #0f172a;
+  --seri-panel-heading: #020617;
+  --seri-panel-muted: #64748b;
+  --seri-panel-soft-text: #334155;
+  --seri-panel-bg: #ffffff;
+  --seri-panel-soft-bg: #eff6ff;
+}
+
+
+/* ---------- DARK MODE ---------- */
+
+[data-theme="dark"] {
+  --seri-panel-text: #f8fafc;
+  --seri-panel-heading: #ffffff;
+  --seri-panel-muted: #cbd5e1;
+  --seri-panel-soft-text: #e2e8f0;
+  --seri-panel-bg: #0f172a;
+  --seri-panel-soft-bg: #172554;
+}
+
+
+/* =====================================================
+   PANEL
+===================================================== */
+
+.seri-voice-panel {
+  background: var(--seri-panel-bg) !important;
+  color: var(--seri-panel-text) !important;
+}
+
+
+/* =====================================================
+   ALL NORMAL TEXT
+===================================================== */
+
+.seri-voice-panel .voice-brand strong,
+.seri-voice-panel .voice-state strong,
+.seri-voice-panel .spoken-text p {
+  color: var(--seri-panel-heading) !important;
+}
+
+
+/* =====================================================
+   SECONDARY TEXT
+===================================================== */
+
+.seri-voice-panel .voice-brand span,
+.seri-voice-panel .voice-state span,
+.seri-voice-panel .voice-privacy {
+  color: var(--seri-panel-muted) !important;
+}
+
+
+/* =====================================================
+   RECOGNIZED TEXT BOX
+===================================================== */
+
+.seri-voice-panel .spoken-text {
+  background: var(--seri-panel-soft-bg) !important;
+}
+
+
+.seri-voice-panel .spoken-text p {
+  color: var(--seri-panel-soft-text) !important;
+}
+
+
+/* =====================================================
+   PRIVACY
+===================================================== */
+
+.seri-voice-panel .voice-privacy span {
+  color: var(--seri-panel-muted) !important;
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+.seri-voice-panel .voice-close {
+  background: var(--seri-panel-soft-bg) !important;
+  color: var(--seri-panel-muted) !important;
+}
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+.seri-voice-panel .voice-error {
+  color: var(--seri-danger) !important;
+}
+
+
+/* =====================================================
+   DARK MODE - FORCE TEXT COLORS
+===================================================== */
+
+[data-theme="dark"] .seri-voice-panel .voice-brand strong,
+[data-theme="dark"] .seri-voice-panel .voice-state strong {
+  color: #ffffff !important;
+}
+
+
+[data-theme="dark"] .seri-voice-panel .voice-brand span,
+[data-theme="dark"] .seri-voice-panel .voice-state span {
+  color: #cbd5e1 !important;
+}
+
+
+[data-theme="dark"] .seri-voice-panel .spoken-text p {
+  color: #e2e8f0 !important;
+}
+
+
+[data-theme="dark"] .seri-voice-panel .voice-privacy {
+  color: #94a3b8 !important;
+}
+
+
+[data-theme="dark"] .seri-voice-panel .voice-close {
+  color: #cbd5e1 !important;
+}
+
+
+/* =====================================================
+   LIGHT MODE - FORCE TEXT COLORS
+===================================================== */
+
+[data-theme="light"] .seri-voice-panel .voice-brand strong,
+[data-theme="light"] .seri-voice-panel .voice-state strong {
+  color: #020617 !important;
+}
+
+
+[data-theme="light"] .seri-voice-panel .voice-brand span,
+[data-theme="light"] .seri-voice-panel .voice-state span {
+  color: #64748b !important;
+}
+
+
+[data-theme="light"] .seri-voice-panel .spoken-text p {
+  color: #334155 !important;
+}
+
+
+[data-theme="light"] .seri-voice-panel .voice-privacy {
+  color: #64748b !important;
+}
+
+
+[data-theme="light"] .seri-voice-panel .voice-close {
+  color: #64748b !important;
+}
+/* =========================================================
+   VOICE RECOVERY ACTIONS
+   ========================================================= */
+
+.voice-recovery-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.voice-retry-button,
+.voice-screen-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 0;
+  outline: none;
+
+  min-height: 44px;
+  padding: 0 16px;
+
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+
+/* =========================================================
+   TRY AGAIN
+   ========================================================= */
+
+.voice-retry-button {
+  flex: 1;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #0891b2
+  );
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.voice-retry-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 11px 24px rgba(37, 99, 235, 0.30);
+}
+
+.voice-retry-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   CONTINUE WITH SCREEN
+   ========================================================= */
+
+.voice-screen-button {
+  flex: 1;
+
+  color: var(--seri-text);
+
+  background: var(--seri-card-secondary);
+
+  border: 1px solid var(--seri-border);
+
+  box-shadow: 0 5px 14px var(--seri-shadow);
+}
+
+.voice-screen-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+.voice-screen-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   START SPEAKING
+   ========================================================= */
+
+.voice-start-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 14px;
+
+  border: 1px solid var(--seri-border);
+  border-radius: 12px;
+
+  background: var(--seri-card-secondary);
+  color: var(--seri-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.voice-start-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+
+/* =========================================================
+   DONE SPEAKING
+   ========================================================= */
+
+.voice-stop-button {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 100%;
+  min-height: 46px;
+
+  margin-top: 14px;
+
+  border: 1px solid var(--seri-border);
+  border-radius: 12px;
+
+  background: var(--seri-card-secondary);
+  color: var(--seri-text);
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.voice-stop-button:hover {
+  transform: translateY(-1px);
+
+  background: var(--seri-soft);
+
+  border-color: var(--seri-primary);
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+.voice-retry-button:focus-visible,
+.voice-screen-button:focus-visible,
+.voice-start-button:focus-visible,
+.voice-stop-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.28);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+  .voice-recovery-actions {
+    flex-direction: column;
+  }
+
+  .voice-retry-button,
+  .voice-screen-button {
+    width: 100%;
+    flex: none;
+  }
+
+}
